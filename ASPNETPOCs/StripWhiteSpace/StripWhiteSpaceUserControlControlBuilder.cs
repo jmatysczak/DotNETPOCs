@@ -3,7 +3,7 @@ using System.Web;
 using System.Web.UI;
 
 namespace ASPNETPOCs.StripWhiteSpace {
-  public class StripWhiteSpacePageControlBuilder : FileLevelPageControlBuilder {
+  public class StripWhiteSpaceUserControlControlBuilder : FileLevelUserControlBuilder {
     public override bool AllowWhitespaceLiterals() {
       return false;
     }
