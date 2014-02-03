@@ -39,18 +39,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DISetupOnPageParse\DIPage.aspx" />
+    <Content Include="DISetupOnPageParse\DIUserControl.ascx" />
     <Content Include="StripWhiteSpace\StripWhiteSpacePage.aspx" />
     <Content Include="StripWhiteSpace\StripWhiteSpaceUserControl.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DISetupOnPageParse\DIFileLevelControlBuilder.cs" />
+    <Compile Include="DISetupOnPageParse\DIFileLevelPageControlBuilder.cs" />
+    <Compile Include="DISetupOnPageParse\DIFileLevelUserControlBuilder.cs" />
     <Compile Include="DISetupOnPageParse\DIPage.aspx.cs">
       <DependentUpon>DIPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DISetupOnPageParse\DIPage.aspx.designer.cs">
       <DependentUpon>DIPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DISetupOnPageParse\DIUserControl.ascx.cs">
+      <DependentUpon>DIUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DISetupOnPageParse\DIUserControl.ascx.designer.cs">
+      <DependentUpon>DIUserControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="DISetupOnPageParse\InjectDepAttribute.cs" />
     <Compile Include="StripWhiteSpace\StripWhiteSpacePage.aspx.cs">

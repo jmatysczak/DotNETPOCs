@@ -1,8 +1,8 @@
 ﻿using System.Web.UI;
 
 namespace ASPNETPOCs.DISetupOnPageParse {
-  [FileLevelControlBuilder(typeof(DIFileLevelPageControlBuilder))]
-  public partial class DIPage : Page {
+  [FileLevelControlBuilder(typeof(DIFileLevelUserControlBuilder))]
+  public partial class DIUserControl : UserControl {
     [InjectDep("World")]
     protected string Name { get; set; }
   }
