@@ -38,11 +38,21 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DISetupOnPageParse\DIPage.aspx" />
     <Content Include="StripWhiteSpace\StripWhiteSpacePage.aspx" />
     <Content Include="StripWhiteSpace\StripWhiteSpaceUserControl.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DISetupOnPageParse\DIFileLevelControlBuilder.cs" />
+    <Compile Include="DISetupOnPageParse\DIPage.aspx.cs">
+      <DependentUpon>DIPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DISetupOnPageParse\DIPage.aspx.designer.cs">
+      <DependentUpon>DIPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DISetupOnPageParse\InjectDep.cs" />
     <Compile Include="StripWhiteSpace\StripWhiteSpacePage.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>StripWhiteSpacePage.aspx</DependentUpon>
