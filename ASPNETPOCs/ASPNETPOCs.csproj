@@ -52,7 +52,7 @@
     <Compile Include="DISetupOnPageParse\DIPage.aspx.designer.cs">
       <DependentUpon>DIPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DISetupOnPageParse\InjectDep.cs" />
+    <Compile Include="DISetupOnPageParse\InjectDepAttribute.cs" />
     <Compile Include="StripWhiteSpace\StripWhiteSpacePage.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>StripWhiteSpacePage.aspx</DependentUpon>

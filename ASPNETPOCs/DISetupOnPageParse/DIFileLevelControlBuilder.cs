@@ -11,11 +11,11 @@ namespace ASPNETPOCs.DISetupOnPageParse {
       Type type = Type.GetType(derivedType.BaseTypes[0].BaseType);
       PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
       foreach(PropertyInfo property in properties) {
-        object[] injectDeps = property.GetCustomAttributes(typeof(InjectDep), true);
+        object[] injectDeps = property.GetCustomAttributes(typeof(InjectDepAttribute), true);
         if(injectDeps.Length == 1) {
           CodeStatement setProperty = new CodeAssignStatement(
             new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), property.Name),
-            new CodePrimitiveExpression(" (Injected) " + (injectDeps[0] as InjectDep).Name)
+            new CodePrimitiveExpression(" (Injected) " + (injectDeps[0] as InjectDepAttribute).Name)
             );
           buildMethod.Statements.Add(setProperty);
         }

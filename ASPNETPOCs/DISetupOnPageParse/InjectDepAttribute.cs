@@ -2,9 +2,9 @@
 
 namespace ASPNETPOCs.DISetupOnPageParse {
   [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-  public class InjectDep : Attribute {
+  public class InjectDepAttribute : Attribute {
     public string Name;
-    public InjectDep(string name) {
+    public InjectDepAttribute(string name) {
       this.Name = name;
     }
   }
