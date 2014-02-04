@@ -3,7 +3,7 @@
 namespace ASPNETPOCs.DISetupOnPageParse {
   [FileLevelControlBuilder(typeof(DIFileLevelUserControlBuilder))]
   public partial class DIUserControl : UserControl {
-    [InjectDep("World")]
+    [InjectDep("Jane Doe")]
     protected string Name { get; set; }
   }
 }
