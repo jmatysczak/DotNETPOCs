@@ -10,9 +10,9 @@
     <title>Strip White Space</title>
   </head>
   <body>
-    <h1>
-      Hello World
-    </h1>
+    <div>
+      Change the debug attribute of the compilation element in the web.config, reload, and view the source.
+    </div>
     <uc:StripWhiteSpaceUserControl runat="server" />
   </body>
 </html>
