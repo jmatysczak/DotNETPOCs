@@ -4,7 +4,7 @@ using System.Web.UI.WebControls;
 namespace ASPNETPOCs.DISetupOnPageParse {
   [ControlBuilder(typeof(DIControlBuilder))]
   public class DICustomControl : Label {
-    [InjectDep("World")]
-    public string CustomText { set { this.Text = value + " (from custom control)"; } }
+    [InjectDep("Jane Roe")]
+    public string CustomText { set { this.Text = value; } }
   }
 }

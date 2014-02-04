@@ -19,7 +19,7 @@ namespace ASPNETPOCs.DISetupOnPageParse {
       // Standard reflection to get all of the properties. You could also look for fields.
       PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
       foreach(PropertyInfo property in properties) {
-        // See if the property has a specific attribute.
+        // See if the property has the specific attribute we care about.
         object[] injectDeps = property.GetCustomAttributes(typeof(InjectDepAttribute), true);
         if(injectDeps.Length == 1) {
           // Create the code dom to perform the injection.

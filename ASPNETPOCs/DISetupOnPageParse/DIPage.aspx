@@ -20,6 +20,8 @@
     <p/>
     <uc:DIUserControl runat="server" />
     <p/>
-    <h2>Hello <uc:DICustomControl runat="server" /></h2>
+    <div>
+      The value that was set on the control's CustomText property: <uc:DICustomControl runat="server" />
+    </div>
   </body>
 </html>
