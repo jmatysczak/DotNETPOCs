@@ -1,6 +1,7 @@
-##### Proof of concepts/examples/investigations in .NET.
+#### Proof of concepts/examples/investigations in .NET.
 
-Folder             | Description
------------------- | -----------
-StripWhiteSpace    | Remove unnecessary white space in ASPX and ASCX files when they are parsed and converted to classes.
-DISetupOnPageParse | Add code to the class that renders the page to perform property base dependency injection for ASCXs, ASPXs, and server controls.
+##### ASPNETPOCs/StripWhiteSpace
+Remove unnecessary white space in the markup of ASPXs and ASCXs as they are converted to classes.
+
+##### ASPNETPOCs/DISetupOnPageParse
+Add code to the classes that render ASPXs and ASCXs to perform dependency injection.
