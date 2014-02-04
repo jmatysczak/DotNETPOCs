@@ -3,7 +3,7 @@
 namespace ASPNETPOCs.DISetupOnPageParse {
   [FileLevelControlBuilder(typeof(DIFileLevelPageControlBuilder))]
   public partial class DIPage : Page {
-    [InjectDep("World")]
+    [InjectDep("John Doe")]
     protected string Name { get; set; }
   }
 }

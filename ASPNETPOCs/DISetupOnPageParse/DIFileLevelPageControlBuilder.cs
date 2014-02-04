@@ -20,7 +20,7 @@ namespace ASPNETPOCs.DISetupOnPageParse {
         if(injectDeps.Length == 1) {
           CodeStatement setProperty = new CodeAssignStatement(
             new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), property.Name),
-            new CodePrimitiveExpression(" (Injected) " + (injectDeps[0] as InjectDepAttribute).Name)
+            new CodePrimitiveExpression((injectDeps[0] as InjectDepAttribute).Name)
           );
           buildMethod.Statements.Add(setProperty);
         }

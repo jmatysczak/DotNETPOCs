@@ -11,9 +11,15 @@
     <title>Page With DI</title>
   </head>
   <body>
-    <h1>Hello <%=Name%></h1>
+    <div>
+      The value of the page's Name property: <%=Name%><br/>
+      The page's class: <%= GetType() %><br/>
+      The page's class's assembly: <%= GetType().Assembly.Location %><br/>
+      Take a look at the class's "__BuildControlTree" method with an assembly browser like ILSpy.
+    </div>
+    <p/>
     <uc:DIUserControl runat="server" />
+    <p/>
     <h2>Hello <uc:DICustomControl runat="server" /></h2>
-    <h2><%= System.Reflection.Assembly.GetExecutingAssembly().Location %></h2>
   </body>
 </html>
