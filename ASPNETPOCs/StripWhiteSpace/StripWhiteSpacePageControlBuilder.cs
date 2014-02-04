@@ -8,10 +8,14 @@ namespace ASPNETPOCs.StripWhiteSpace {
       return false;
     }
 
-    private static readonly Regex WHITE_SPACE_BETWEEN_ELEMENTS = new Regex(@"(?<=>)\s+|\s+(?=<)", RegexOptions.Compiled);
     public override void AppendLiteralString(string s) {
+      base.AppendLiteralString(StripWhiteSpace(s));
+    }
+
+    private static readonly Regex WHITE_SPACE_BETWEEN_ELEMENTS = new Regex(@"(?<=>)\s+|\s+(?=<)", RegexOptions.Compiled);
+    public static string StripWhiteSpace(string s) {
       if(HttpContext.Current == null || !HttpContext.Current.IsDebuggingEnabled) s = WHITE_SPACE_BETWEEN_ELEMENTS.Replace(s, "").Trim();
-      base.AppendLiteralString(s);
+      return s;
     }
   }
 }

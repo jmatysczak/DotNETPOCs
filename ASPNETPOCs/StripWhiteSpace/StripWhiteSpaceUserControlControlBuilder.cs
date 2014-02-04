@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.UI;
+﻿using System.Web.UI;
 
 namespace ASPNETPOCs.StripWhiteSpace {
   public class StripWhiteSpaceUserControlControlBuilder : FileLevelUserControlBuilder {
@@ -8,10 +6,8 @@ namespace ASPNETPOCs.StripWhiteSpace {
       return false;
     }
 
-    private static readonly Regex WHITE_SPACE_BETWEEN_ELEMENTS = new Regex(@"(?<=>)\s+|\s+(?=<)", RegexOptions.Compiled);
     public override void AppendLiteralString(string s) {
-      if(HttpContext.Current == null || !HttpContext.Current.IsDebuggingEnabled) s = WHITE_SPACE_BETWEEN_ELEMENTS.Replace(s, "").Trim();
-      base.AppendLiteralString(s);
+      base.AppendLiteralString(StripWhiteSpacePageControlBuilder.StripWhiteSpace(s));
     }
   }
 }
