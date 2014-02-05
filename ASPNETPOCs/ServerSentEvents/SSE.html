@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Server Sent Events</title>
+  </head>
+  <body>
+    <div id="messages"></div>
+
+    <script>
+var messages = document.getElementById("messages");
+function log(message) {
+  var text = document.createTextNode(message);
+  messages.appendChild(text);
+  messages.appendChild(document.createElement("br"));
+}
+
+if(window.EventSource) {
+  var source = new EventSource("AsyncSSEHandler.ashx");
+  source.addEventListener("open", function(e) {
+    log("[open] Connection openned.");
+  }, false);
+
+  source.addEventListener("message", function(e) {
+    log("[message] " + e.data);
+  }, false);
+
+  source.addEventListener("error", function(e) {
+    if(e.eventPhase === EventSource.CLOSED) {
+      log("[error] Connection closed.");
+    } else {
+      log("[error] readyState: " + e.eventPhase);
+    }
+  }, false);
+} else {
+  log("Your browser does not support server sent events.");
+}
+    </script>
+  </body>
+</html>

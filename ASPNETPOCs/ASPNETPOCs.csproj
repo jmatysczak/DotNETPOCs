@@ -40,6 +40,7 @@
   <ItemGroup>
     <Content Include="DISetupOnPageParse\DIPage.aspx" />
     <Content Include="DISetupOnPageParse\DIUserControl.ascx" />
+    <Content Include="ServerSentEvents\SSE.html" />
     <Content Include="StripWhiteSpace\StripWhiteSpacePage.aspx" />
     <Content Include="StripWhiteSpace\StripWhiteSpaceUserControl.ascx" />
     <Content Include="Web.config" />
@@ -64,6 +65,9 @@
       <DependentUpon>DIUserControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="DISetupOnPageParse\InjectDepAttribute.cs" />
+    <Compile Include="ServerSentEvents\AsyncSSEHandler.ashx.cs">
+      <DependentUpon>AsyncSSEHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="StripWhiteSpace\StripWhiteSpacePage.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>StripWhiteSpacePage.aspx</DependentUpon>
@@ -81,6 +85,9 @@
       <DependentUpon>StripWhiteSpaceUserControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="StripWhiteSpace\StripWhiteSpaceUserControlControlBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ServerSentEvents\AsyncSSEHandler.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
