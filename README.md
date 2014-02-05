@@ -17,4 +17,4 @@ The client is a simple HTML page that creates an EventSource, listens to its lif
 
 The server is an asynchronous http handler. The advantage of using an asynchronous versus a synchronous http handler is that a thread won't be tied up for the life time of the request.
 
-I am not sure this code should be used in an application since technically IIS7- and .NET 4.0- don't support server sent events. So while this example works. Using this technique might cause problems.
+I am not sure this code should be used in a real application since technically IIS7- and .NET 4.0- don't support server sent events. So while this example works, using this technique might cause problems.
