@@ -5,12 +5,15 @@ using System.Runtime.Remoting.Proxies;
 namespace InterfaceProxying {
   class Program {
     static void Main(string[] args) {
-      (new ExampleProxy(typeof(InterfaceToProxy)).GetTransparentProxy() as InterfaceToProxy).AnEvent += (sender, e) => { };
+      string theOutArg;
+      var theReturnValue = (new ExampleProxy(typeof(InterfaceToProxy)).GetTransparentProxy() as InterfaceToProxy).AMethod("Hello", out theOutArg);
+      Console.WriteLine("theOutArg: {0}", theOutArg);
+      Console.WriteLine("theReturnValue: {0}", theReturnValue);
     }
   }
 
   interface InterfaceToProxy {
-    event EventHandler AnEvent;
+    string AMethod(string anInArg, out string anOutArg);
   }
 
   class ExampleProxy : RealProxy {
@@ -36,7 +39,9 @@ namespace InterfaceProxying {
       Console.WriteLine("   TypeName: {0}", call.TypeName);
       Console.WriteLine("   Uri: {0}", call.Uri);
 
-      return new ReturnMessage(null, null, 0, call.LogicalCallContext, call);
+      var returnValue = call.InArgs[0].ToString() + " World";
+      // Sneaky. The second and third parameters must include the in parameters...
+      return new ReturnMessage(returnValue, new object[] { null, returnValue + " Out" }, 2, call.LogicalCallContext, call);
     }
   }
 }
