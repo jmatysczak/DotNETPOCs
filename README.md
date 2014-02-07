@@ -18,3 +18,6 @@ I am not sure this code should be used in a real application since technically I
 Remove unnecessary white space in the markup of ASPXs and ASCXs as they are converted to classes.
 
 The code behind of each ASPX and ASCX has a control builder attribute that specifies a control build to use. The control builders override the AllowWhitespaceLiterals and AppendLiteralString methods to remove whitespace.
+
+#### InterfaceProxying
+An example of how to proxy an interface and handle a method call.
