@@ -4,10 +4,6 @@ using System.Web.UI;
 
 namespace ASPNETPOCs.StripWhiteSpace {
   public class StripWhiteSpacePageControlBuilder : FileLevelPageControlBuilder {
-    public override bool AllowWhitespaceLiterals() {
-      return false;
-    }
-
     public override void AppendLiteralString(string s) {
       base.AppendLiteralString(StripWhiteSpace(s));
     }
