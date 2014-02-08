@@ -19,5 +19,10 @@ Remove unnecessary white space in the markup of ASPXs and ASCXs as they are conv
 
 The code behind of each ASPX and ASCX has a control builder attribute that specifies a control build to use. The control builders override the AllowWhitespaceLiterals and AppendLiteralString methods to remove whitespace.
 
+#### GetASPNETFileAsType
+Example of compiling and rendering an ASPX page outside of the ASP.NET process.
+
+Useful to unit test rendering.
+
 #### InterfaceProxying
-An example of how to proxy an interface and handle a method call.
+Example of how to proxy an interface and handle a method call.
