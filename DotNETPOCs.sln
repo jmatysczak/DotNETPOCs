@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceProxying", "Interf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetASPNETFileAsType", "GetASPNETFileAsType\GetASPNETFileAsType.csproj", "{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNETHosting", "ASPNETHosting\ASPNETHosting.csproj", "{9A1AB817-5D5E-445C-8D4D-D31C3EB61413}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A1AB817-5D5E-445C-8D4D-D31C3EB61413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A1AB817-5D5E-445C-8D4D-D31C3EB61413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A1AB817-5D5E-445C-8D4D-D31C3EB61413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A1AB817-5D5E-445C-8D4D-D31C3EB61413}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
