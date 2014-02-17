@@ -1,5 +1,8 @@
 ### Proof of concepts/examples/investigations in .NET.
 
+#### ASPNETHosting
+Example of how to host ASP.NET, add a module to modify page, and process a page.
+
 #### ASPNETPOCs/DISetupOnPageParse
 Add code to the classes that render ASPXs and ASCXs to perform dependency injection.
 
