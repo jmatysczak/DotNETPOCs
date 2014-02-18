@@ -59,12 +59,9 @@ namespace ASPNETHosting {
   }
 
   public class ExampleHttpModule : IHttpModule {
-    public void Dispose() {
-      Console.WriteLine(this.GetType().FullName + ".Dispose()");
-    }
+    public void Dispose() { }
 
     public void Init(HttpApplication context) {
-      Console.WriteLine(this.GetType().FullName + ".Init(HttpApplication)");
       context.PreRequestHandlerExecute += delegate {
         var page = (Page)HttpContext.Current.CurrentHandler;
         page.PreRender += delegate {
