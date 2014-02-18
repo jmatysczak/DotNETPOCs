@@ -5,7 +5,6 @@ using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.UI;
-using System.Xml;
 
 namespace ASPNETHosting {
   class Program {
@@ -28,7 +27,15 @@ namespace ASPNETHosting {
         var thisAssemblysLocation = Assembly.GetExecutingAssembly().Location;
         File.Copy(thisAssemblysLocation, Path.Combine(aspnetRootBinDir, Path.GetFileName(thisAssemblysLocation)));
 
-        //ExampleAspNetHost.AddModulesToWebConfig(true);
+        File.WriteAllText(Path.Combine(aspnetRootDir, "web.config"), @"
+<configuration>
+  <system.web>
+    <httpModules>
+      <add name='ExampleHttpModule' type='" + typeof(ExampleHttpModule).AssemblyQualifiedName + @"'/>
+    </httpModules>
+  </system.web>
+</configuration>
+        ");
 
         host = (ExampleAspNetHost)ApplicationHost.CreateApplicationHost(typeof(ExampleAspNetHost), "/ExampleVirtualRoot", aspnetRootDir);
 
@@ -41,30 +48,6 @@ namespace ASPNETHosting {
     }
 
     public class ExampleAspNetHost : MarshalByRefObject {
-      public const string WEB_ROOT_DIR = @"C:\MyData\PD\WorkLenz\Trunk\WorkLenz\WorkLenz\";
-
-      public static void AddModulesToWebConfig(bool add) {
-        string webConfig = Path.Combine(WEB_ROOT_DIR, "web.config");
-        XmlDocument doc = new XmlDocument();
-        doc.Load(webConfig);
-
-        XmlNode assemblies = doc.SelectSingleNode("//assemblies");
-        if(add) {
-          assemblies.InnerXml += "<add assembly='" + typeof(ExampleHttpModule).Assembly.FullName + "'/>";
-        } else {
-          assemblies.RemoveChild(assemblies.LastChild);
-        }
-
-        XmlNode httpModules = doc.SelectSingleNode("//httpModules");
-        if(add) {
-          httpModules.InnerXml += "<add name='ExampleHttpModule' type='" + typeof(ExampleHttpModule).FullName + "'/>";
-        } else {
-          httpModules.RemoveChild(httpModules.LastChild);
-        }
-
-        doc.Save(webConfig);
-      }
-
       public void ProcessRequest(string page) {
         HttpRuntime.ProcessRequest(new SimpleWorkerRequest(page, null, Console.Out));
       }
