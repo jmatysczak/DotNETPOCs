@@ -65,8 +65,12 @@ namespace ASPNETHosting {
 
     public void Init(HttpApplication context) {
       Console.WriteLine(this.GetType().FullName + ".Init(HttpApplication)");
-      context.PostRequestHandlerExecute += delegate {
-        Page page = (Page)HttpContext.Current.CurrentHandler;
+      context.PreRequestHandlerExecute += delegate {
+        var page = (Page)HttpContext.Current.CurrentHandler;
+        page.PreRender += delegate {
+          var name = page.GetType().GetProperty("Name", BindingFlags.Instance | BindingFlags.NonPublic);
+          name.SetValue(page, "Johnny 'Hosted' Doe", null);
+        };
       };
     }
   }
