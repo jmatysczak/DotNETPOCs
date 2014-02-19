@@ -9,6 +9,7 @@ using System.Web.UI;
 namespace ASPNETHosting {
   class Program {
     static void Main(string[] args) {
+      Console.WriteLine("[Program.Main(string[])]: AppDomain.Id: {0}", Thread.GetDomain().Id);
       ExampleAspNetHost host = null;
 
       try {
@@ -70,6 +71,7 @@ namespace ASPNETHosting {
 
   public class ExampleAspNetHost : MarshalByRefObject {
     public void ProcessRequest(string page) {
+      Console.WriteLine("[ExampleAspNetHost.ProcessRequest(string)]: AppDomain.Id: {0}", Thread.GetDomain().Id);
       HttpRuntime.ProcessRequest(new SimpleWorkerRequest(page, null, Console.Out));
     }
 
@@ -83,6 +85,7 @@ namespace ASPNETHosting {
     public void Dispose() { }
 
     public void Init(HttpApplication context) {
+      Console.WriteLine("[ExampleHttpModule.Init(HttpApplication)]: AppDomain.Id: {0}", Thread.GetDomain().Id);
       context.PreRequestHandlerExecute += delegate {
         var page = (Page)HttpContext.Current.CurrentHandler;
         page.PreRender += delegate {
