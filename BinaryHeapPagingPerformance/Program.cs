@@ -46,9 +46,7 @@ namespace BinaryHeapPagingPerformance {
 
     public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
       Array.Sort(dataToSortAndPage);
-      var sortedAndPaged = new Guid[length];
-      Array.Copy(dataToSortAndPage, start, sortedAndPaged, 0, length);
-      return sortedAndPaged;
+      return dataToSortAndPage.Skip(start).Take(length).ToArray();
     }
   }
 
