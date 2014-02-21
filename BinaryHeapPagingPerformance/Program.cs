@@ -91,8 +91,8 @@ namespace BinaryHeapPagingPerformance {
       var upperBound = maxItems - 1;
       var heap = new Guid[maxItems];
 
-      for(var i = 0; i < maxItems; i++) {
-        var currentIndex = i;
+      for(int i = dataToSortAndPage.Length - maxItems, j = 0; i < dataToSortAndPage.Length; i++, j++) {
+        var currentIndex = j;
         var currentItem = dataToSortAndPage[i];
         while(currentIndex > 0) {
           var parentIndex = (currentIndex - 1) / 2;
@@ -105,7 +105,7 @@ namespace BinaryHeapPagingPerformance {
       }
 
       var maxItem = heap[0];
-      for(var i = dataToSortAndPage.Length; i-- > maxItems; ) {
+      for(var i = dataToSortAndPage.Length - maxItems; i-- > 0; ) {
         var currentItem = dataToSortAndPage[i];
         if(currentItem.CompareTo(maxItem) < 0) {
           var parentIndex = 0;
