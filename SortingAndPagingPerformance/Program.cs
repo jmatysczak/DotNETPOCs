@@ -8,14 +8,18 @@ namespace SortingAndPagingPerformance {
     static void Main(string[] args) {
       var start = 80;
       var length = 20;
+      var stopwatch = new Stopwatch();
       var dataToSortAndPage = new Guid[20000000];
 
-      for(var i = dataToSortAndPage.Length; i-- > 0; ) dataToSortAndPage[i] = Guid.NewGuid();
+      stopwatch.Reset();
+      stopwatch.Start();
+      for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i] = Guid.NewGuid();
+      stopwatch.Stop();
+      Console.WriteLine("Created: {0}", stopwatch.Elapsed);
 
-      var stopwatch = new Stopwatch();
-      var sortAndPage = new ISortAndPage[] { new SortAll(), /*new SortAllWithLinq(),*/ new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap() };
+      var sortAndPage = new ISortAndPage[] { new SortAll(), /*new SortAllWithLinq(),*/ new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap(), new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap(), new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap() };
       var sortedAndPaged = new Guid[sortAndPage.Length][];
-      for(var i = sortAndPage.Length; i-- > 0; ) {
+      for(var i = 0; i < sortAndPage.Length; i++) {
         stopwatch.Reset();
         stopwatch.Start();
         sortedAndPaged[i] = sortAndPage[i].SortAndPage(start, length, dataToSortAndPage);
@@ -26,12 +30,12 @@ namespace SortingAndPagingPerformance {
       stopwatch.Reset();
       stopwatch.Start();
       Guid empty = Guid.Empty;
-      for(var i = dataToSortAndPage.Length; i-- > 0; ) dataToSortAndPage[i].CompareTo(empty);
+      for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i].CompareTo(empty);
       stopwatch.Stop();
       Console.WriteLine("Loop and compare: {0}", stopwatch.Elapsed);
 
-      for(var i = sortedAndPaged.Length - 1; i-- > 0; ) {
-        sortedAndPaged[i].ShouldEqual(sortedAndPaged[i + 1]);
+      for(var i = 1; i < sortedAndPaged.Length; i++) {
+        sortedAndPaged[i - 1].ShouldEqual(sortedAndPaged[i]);
       }
     }
   }
@@ -39,7 +43,7 @@ namespace SortingAndPagingPerformance {
   static class GuidArrayExtensionMethods {
     public static void ShouldEqual(this Guid[] me, Guid[] other) {
       if(me.Length != other.Length) throw new ApplicationException("Arrays are not the same length. " + me.Length + " vs " + other.Length + ".");
-      for(var i = me.Length; i-- > 0; ) if(me[i] != other[i]) throw new ApplicationException("Values at " + i + " are not the same. " + me[i] + " vs " + other[i] + ".");
+      for(var i = 0; i < me.Length; i++) if(me[i] != other[i]) throw new ApplicationException("Values at " + i + " are not the same. " + me[i] + " vs " + other[i] + ".");
     }
   }
 
