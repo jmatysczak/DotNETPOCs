@@ -13,7 +13,7 @@ namespace BinaryHeapPagingPerformance {
       for(var i = dataToSortAndPage.Length; i-- > 0; ) dataToSortAndPage[i] = Guid.NewGuid();
 
       var stopwatch = new Stopwatch();
-      var sortAndPage = new ISortAndPage[] { new SortAll(), new SortAllWithLinq(), new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap() };
+      var sortAndPage = new ISortAndPage[] { new SortAll(), /*new SortAllWithLinq(),*/ new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap() };
       var sortedAndPaged = new Guid[sortAndPage.Length][];
       for(var i = sortAndPage.Length; i-- > 0; ) {
         stopwatch.Reset();
