@@ -66,10 +66,10 @@ namespace BinaryHeapPagingPerformance {
       var upperBound = maxItems - 1;
       var queue = new SortedList<Guid, object>(maxItems + 1);
 
-      for(var i = maxItems; i-- > 0; ) queue[dataToSortAndPage[i]] = null;
+      for(var i = dataToSortAndPage.Length - maxItems; i < dataToSortAndPage.Length; i++) queue[dataToSortAndPage[i]] = null;
 
       var maxItem = queue.Keys[upperBound];
-      for(var i = dataToSortAndPage.Length; i-- > maxItems; ) {
+      for(var i = dataToSortAndPage.Length - maxItems; i-- > 0; ) {
         var currentItem = dataToSortAndPage[i];
         if(currentItem.CompareTo(maxItem) < 0) {
           queue[currentItem] = null;
@@ -87,6 +87,7 @@ namespace BinaryHeapPagingPerformance {
 
     public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
       var maxItems = start + length;
+      if(maxItems % 2 == 0) maxItems++; // Ensure there is always a "right" child.
       var upperBound = maxItems - 1;
       var heap = new Guid[maxItems];
 
@@ -112,12 +113,10 @@ namespace BinaryHeapPagingPerformance {
           do {
             var rightChildIndex = maxChildIndex + 1;
             var maxChildItem = heap[maxChildIndex];
-            if(rightChildIndex <= upperBound) {
-              var rightChildItem = heap[rightChildIndex];
-              if(rightChildItem.CompareTo(maxChildItem) > 0) {
-                maxChildItem = rightChildItem;
-                maxChildIndex = rightChildIndex;
-              }
+            var rightChildItem = heap[rightChildIndex];
+            if(rightChildItem.CompareTo(maxChildItem) > 0) {
+              maxChildItem = rightChildItem;
+              maxChildIndex = rightChildIndex;
             }
             if(currentItem.CompareTo(maxChildItem) >= 0) break;
             heap[parentIndex] = maxChildItem;
