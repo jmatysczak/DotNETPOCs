@@ -68,13 +68,14 @@ namespace BinaryHeapPagingPerformance {
 
       for(var i = dataToSortAndPage.Length - maxItems; i < dataToSortAndPage.Length; i++) queue[dataToSortAndPage[i]] = null;
 
+      var keys = queue.Keys;
       var maxItem = queue.Keys[upperBound];
       for(var i = dataToSortAndPage.Length - maxItems; i-- > 0; ) {
         var currentItem = dataToSortAndPage[i];
         if(currentItem.CompareTo(maxItem) < 0) {
           queue[currentItem] = null;
           queue.RemoveAt(maxItems);
-          maxItem = queue.Keys[upperBound];
+          maxItem = keys[upperBound];
         }
       }
 
