@@ -8,8 +8,8 @@
     <ProjectGuid>{B5220F85-BD77-487C-804F-803A35B6B0C7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BinaryHeapPagingPerformance</RootNamespace>
-    <AssemblyName>BinaryHeapPagingPerformance</AssemblyName>
+    <RootNamespace>SortingAndPagingPerformance</RootNamespace>
+    <AssemblyName>SortingAndPagingPerformance</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

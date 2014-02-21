@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetASPNETFileAsType", "GetA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNETHosting", "ASPNETHosting\ASPNETHosting.csproj", "{9A1AB817-5D5E-445C-8D4D-D31C3EB61413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryHeapPagingPerformance", "BinaryHeapPagingPerformance\BinaryHeapPagingPerformance.csproj", "{B5220F85-BD77-487C-804F-803A35B6B0C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SortingAndPagingPerformance", "SortingAndPagingPerformance\SortingAndPagingPerformance.csproj", "{B5220F85-BD77-487C-804F-803A35B6B0C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
