@@ -78,12 +78,11 @@ namespace BinaryHeapPagingPerformance {
       var keys = queue.Keys;
       var maxItem = keys[upperBound];
       for(var i = dataToSortAndPage.Length - maxItems; i-- > 0; ) {
-        if(dataToSortAndPage[i].CompareTo(maxItem) < 0) {
-          var currentItem = dataToSortAndPage[i];
-          queue[currentItem] = null;
-          queue.RemoveAt(maxItems);
-          maxItem = keys[upperBound];
-        }
+        if(dataToSortAndPage[i].CompareTo(maxItem) >= 0) continue;
+        var currentItem = dataToSortAndPage[i];
+        queue[currentItem] = null;
+        queue.RemoveAt(maxItems);
+        maxItem = keys[upperBound];
       }
 
       return keys.Skip(start).Take(length).ToArray();
@@ -121,26 +120,26 @@ namespace BinaryHeapPagingPerformance {
 
       var maxItem = heap[0];
       for(var i = dataToSortAndPage.Length - maxItems; i-- > 0; ) {
-        if(dataToSortAndPage[i].CompareTo(maxItem) < 0) {
-          var currentItem = dataToSortAndPage[i];
-          var parentIndex = 0;
-          var maxChildIndex = 1; // parentIndex * 2 + 1;
-          do {
-            var rightChildIndex = maxChildIndex + 1;
-            var maxChildItem = heap[maxChildIndex];
-            var rightChildItem = heap[rightChildIndex];
-            if(rightChildItem.CompareTo(maxChildItem) > 0) {
-              maxChildItem = rightChildItem;
-              maxChildIndex = rightChildIndex;
-            }
-            if(currentItem.CompareTo(maxChildItem) >= 0) break;
-            heap[parentIndex] = maxChildItem;
-            parentIndex = maxChildIndex;
-            maxChildIndex = parentIndex * 2 + 1;
-          } while(maxChildIndex <= upperBound);
-          heap[parentIndex] = currentItem;
-          maxItem = heap[0];
-        }
+        if(dataToSortAndPage[i].CompareTo(maxItem) >= 0) continue;
+
+        var currentItem = dataToSortAndPage[i];
+        var parentIndex = 0;
+        var maxChildIndex = 1; // parentIndex * 2 + 1;
+        do {
+          var rightChildIndex = maxChildIndex + 1;
+          var maxChildItem = heap[maxChildIndex];
+          var rightChildItem = heap[rightChildIndex];
+          if(rightChildItem.CompareTo(maxChildItem) > 0) {
+            maxChildItem = rightChildItem;
+            maxChildIndex = rightChildIndex;
+          }
+          if(currentItem.CompareTo(maxChildItem) >= 0) break;
+          heap[parentIndex] = maxChildItem;
+          parentIndex = maxChildIndex;
+          maxChildIndex = parentIndex * 2 + 1;
+        } while(maxChildIndex <= upperBound);
+        heap[parentIndex] = currentItem;
+        maxItem = heap[0];
       }
 
       return heap.OrderBy(g => g).Skip(start).Take(length).ToArray();
