@@ -8,7 +8,7 @@ namespace BinaryHeapPagingPerformance {
     static void Main(string[] args) {
       var start = 80;
       var length = 20;
-      var dataToSortAndPage = new Guid[10000000];
+      var dataToSortAndPage = new Guid[20000000];
 
       for(var i = dataToSortAndPage.Length; i-- > 0; ) dataToSortAndPage[i] = Guid.NewGuid();
 
@@ -22,6 +22,13 @@ namespace BinaryHeapPagingPerformance {
         stopwatch.Stop();
         Console.WriteLine("{0}: {1}", sortAndPage[i].Name, stopwatch.Elapsed);
       }
+
+      stopwatch.Reset();
+      stopwatch.Start();
+      Guid empty = Guid.Empty;
+      for(var i = dataToSortAndPage.Length; i-- > 0; ) empty.CompareTo(dataToSortAndPage[i]);
+      stopwatch.Stop();
+      Console.WriteLine("Loop and compare: {0}", stopwatch.Elapsed);
 
       for(var i = sortedAndPaged.Length - 1; i-- > 0; ) {
         sortedAndPaged[i].ShouldEqual(sortedAndPaged[i + 1]);
@@ -69,7 +76,7 @@ namespace BinaryHeapPagingPerformance {
       for(var i = dataToSortAndPage.Length - maxItems; i < dataToSortAndPage.Length; i++) queue[dataToSortAndPage[i]] = null;
 
       var keys = queue.Keys;
-      var maxItem = queue.Keys[upperBound];
+      var maxItem = keys[upperBound];
       for(var i = dataToSortAndPage.Length - maxItems; i-- > 0; ) {
         var currentItem = dataToSortAndPage[i];
         if(currentItem.CompareTo(maxItem) < 0) {
@@ -79,7 +86,7 @@ namespace BinaryHeapPagingPerformance {
         }
       }
 
-      return queue.Keys.Skip(start).Take(length).ToArray();
+      return keys.Skip(start).Take(length).ToArray();
     }
   }
 
