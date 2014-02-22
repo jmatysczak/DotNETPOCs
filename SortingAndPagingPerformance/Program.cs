@@ -8,9 +8,9 @@ namespace SortingAndPagingPerformance {
     static Stopwatch STOPWATCH = new Stopwatch();
 
     static void Main(string[] args) {
-      var start = 80;
       var length = 20;
       var iterations = 5;
+      var fullSortAndPage = new FullSort();
       var dataToSortAndPage = new Guid[10000000];
       var sortAndPageTypes = new ISortAndPage[] { new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap() };
 
@@ -25,24 +25,31 @@ namespace SortingAndPagingPerformance {
         return dataToSortAndPage;
       });
 
-      var actuals = sortAndPageTypes.Select(sortAndPageType => {
-        return time(sortAndPageType.Name + " (Random)", iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
-      }).ToArray();
 
-      var fullSort = new FullSort();
-      var expected = time(fullSort.Name, 0, () => fullSort.SortAndPage(start, length, dataToSortAndPage));
+      foreach(var start in new int[] { 80, 180 }) {
+        Console.WriteLine();
 
-      actuals = sortAndPageTypes.Select(sortAndPageType => {
-        return time(sortAndPageType.Name + " (Ascending)", iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
-      }).Concat(actuals).ToArray();
+        var actuals = sortAndPageTypes.Select(sortAndPageType => {
+          return time(sortAndPageType.Name + " (Random) s" + start, iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
+        }).ToArray();
 
-      Array.Reverse(dataToSortAndPage);
+        var expected = time(fullSortAndPage.Name, 0, () => fullSortAndPage.SortAndPage(start, length, dataToSortAndPage));
 
-      actuals = sortAndPageTypes.Select(sortAndPageType => {
-        return time(sortAndPageType.Name + " (Descending)", iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
-      }).Concat(actuals).ToArray();
+        actuals = sortAndPageTypes.Select(sortAndPageType => {
+          return time(sortAndPageType.Name + " (Ascending) s" + start, iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
+        }).Concat(actuals).ToArray();
 
-      for(var i = 0; i < actuals.Length; i++) actuals[i].ShouldEqual(expected);
+        Array.Reverse(dataToSortAndPage);
+
+        actuals = sortAndPageTypes.Select(sortAndPageType => {
+          return time(sortAndPageType.Name + " (Descending) s" + start, iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
+        }).Concat(actuals).ToArray();
+
+        for(var i = 0; i < actuals.Length; i++) actuals[i].ShouldEqual(expected);
+
+        // Randomize for the next iteration.
+        for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i] = Guid.NewGuid();
+      }
     }
 
     delegate Guid[] Action();
