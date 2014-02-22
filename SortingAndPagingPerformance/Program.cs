@@ -126,25 +126,24 @@ namespace SortingAndPagingPerformance {
       var upperBound = maxItems - 1;
       var heap = new Guid[maxItems];
 
-      /*
-            for(int i = dataToSortAndPage.Length - maxItems, j = 0; i < dataToSortAndPage.Length; i++, j++) {
-              var currentIndex = j;
-              var currentItem = dataToSortAndPage[i];
-              while(currentIndex > 0) {
-                var parentIndex = (currentIndex - 1) / 2;
-                var parentItem = heap[parentIndex];
-                if(currentItem.CompareTo(parentItem) <= 0) break;
-                heap[currentIndex] = parentItem;
-                currentIndex = parentIndex;
-              }
-              heap[currentIndex] = currentItem;
-            }
-      */
+      for(int i = 0; i < maxItems; i++) {
+        var currentIndex = i;
+        var currentItem = dataToSortAndPage[i];
+        while(currentIndex > 0) {
+          var parentIndex = (currentIndex - 1) / 2;
+          var parentItem = heap[parentIndex];
+          if(currentItem.CompareTo(parentItem) <= 0) break;
+          heap[currentIndex] = parentItem;
+          currentIndex = parentIndex;
+        }
+        heap[currentIndex] = currentItem;
+      }
 
-      // Funny shit.
+      /* An alternative to the above.
       Array.Copy(dataToSortAndPage, 0, heap, 0, maxItems);
       Array.Sort(heap);
       Array.Reverse(heap);
+      */
 
       var maxItem = heap[0];
       for(var i = maxItems; i < dataToSortAndPage.Length; i++) {
