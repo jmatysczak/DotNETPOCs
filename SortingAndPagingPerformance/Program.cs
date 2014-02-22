@@ -107,6 +107,16 @@ namespace SortingAndPagingPerformance {
     }
   }
 
+  // A priority queue keeps track of the "top" N items.
+  // In the below two cases "top" means the least/lowest items based on IComparable.CompareTo.
+  // "N" is the offset we want to start at plus the number of items we want.
+  // In otherwords, we keep track of all of the items that make up the "page" of data we want and all previous pages.
+  // NOTE: The worst case example is when the items are sorted in descending order because ever item is put into the queue.
+
+  // A priority queue that uses the standard .NET SortedList to keep track of its items.
+  // The SortedList keeps the code simple.
+  // But it has a higher performance cost as the number of items being put into the queue increases.
+  // This is because the SortedList is ensuring that the items in it are always sorted...which, of course, we don't care about.
   class PriorityQueueUsingASortedList : ISortAndPage {
     public string Name { get { return "Priority Queue Using A Sorted List"; } }
 
@@ -130,23 +140,27 @@ namespace SortingAndPagingPerformance {
     }
   }
 
+  // A priority queue that uses a binary heap to keep track of its items.
+  // Ideally, or rather, in a "real" implementation, we'd create a class that represents the binary heap.
+  // This would probably make the code simpler than the implementation above.
+  // A binary heap has a lower performance cost compared to the SortedList as the number of items being put into the queue increases.
+  // This is because the binary heap is only keeping a "loose" ordering of items.
   class PriorityQueueUsingBinaryHeap : ISortAndPage {
     public string Name { get { return "Priority Queue Using Binary Heap"; } }
 
     public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
-      var maxItems = start + length;
-      if(maxItems % 2 == 0) maxItems++; // Ensure there is always a "right" child.
-      var upperBound = maxItems - 1;
-      var heap = new Guid[maxItems];
+      var totalLength = start + length;
+      if(totalLength % 2 == 0) totalLength++; // Ensure there is always a "right" child.
+      var upperBound = totalLength - 1;
+      var heap = new Guid[totalLength];
 
-      for(int i = 0; i < maxItems; i++) {
+      for(int i = 0; i < totalLength; i++) {
         var currentIndex = i;
         var currentItem = dataToSortAndPage[i];
         while(currentIndex > 0) {
           var parentIndex = (currentIndex - 1) / 2;
-          var parentItem = heap[parentIndex];
-          if(currentItem.CompareTo(parentItem) <= 0) break;
-          heap[currentIndex] = parentItem;
+          if(heap[parentIndex].CompareTo(currentItem) >= 0) break;
+          heap[currentIndex] = heap[parentIndex];
           currentIndex = parentIndex;
         }
         heap[currentIndex] = currentItem;
@@ -159,7 +173,7 @@ namespace SortingAndPagingPerformance {
       */
 
       var maxItem = heap[0];
-      for(var i = maxItems; i < dataToSortAndPage.Length; i++) {
+      for(var i = totalLength; i < dataToSortAndPage.Length; i++) {
         if(dataToSortAndPage[i].CompareTo(maxItem) >= 0) continue;
 
         var currentItem = dataToSortAndPage[i];
