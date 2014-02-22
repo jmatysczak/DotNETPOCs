@@ -99,6 +99,8 @@ namespace SortingAndPagingPerformance {
     public string Name { get { return "Full Sort"; } }
 
     public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
+      // A little over twice as slow...and doesn't sort in place - so it wrecks the subsequent tests.
+      //return dataToSortAndPage.OrderBy(d => d).Skip(start).Take(length).ToArray();
       Array.Sort(dataToSortAndPage);
       return dataToSortAndPage.Skip(start).Take(length).ToArray();
     }
