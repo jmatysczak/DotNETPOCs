@@ -151,20 +151,15 @@ namespace SortingAndPagingPerformance {
 
         var currentItem = dataToSortAndPage[i];
         var parentIndex = 0;
-        var maxChildIndex = 1; // parentIndex * 2 + 1;
+        var leftChildIndex = 1;
         do {
-          var rightChildIndex = maxChildIndex + 1;
-          var maxChildItem = heap[maxChildIndex];
-          var rightChildItem = heap[rightChildIndex];
-          if(rightChildItem.CompareTo(maxChildItem) > 0) {
-            maxChildItem = rightChildItem;
-            maxChildIndex = rightChildIndex;
-          }
-          if(currentItem.CompareTo(maxChildItem) >= 0) break;
-          heap[parentIndex] = maxChildItem;
+          var rightChildIndex = leftChildIndex + 1;
+          var maxChildIndex = heap[leftChildIndex].CompareTo(heap[rightChildIndex]) < 0 ? rightChildIndex : leftChildIndex;
+          if(heap[maxChildIndex].CompareTo(currentItem) <= 0) break;
+          heap[parentIndex] = heap[maxChildIndex];
           parentIndex = maxChildIndex;
-          maxChildIndex = parentIndex * 2 + 1;
-        } while(maxChildIndex <= upperBound);
+          leftChildIndex = parentIndex * 2 + 1;
+        } while(leftChildIndex <= upperBound);
         heap[parentIndex] = currentItem;
         maxItem = heap[0];
       }
