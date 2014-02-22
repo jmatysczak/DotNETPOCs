@@ -142,12 +142,12 @@ namespace SortingAndPagingPerformance {
       */
 
       // Funny shit.
-      Array.Copy(dataToSortAndPage, dataToSortAndPage.Length - maxItems, heap, 0, maxItems);
+      Array.Copy(dataToSortAndPage, 0, heap, 0, maxItems);
       Array.Sort(heap);
       Array.Reverse(heap);
 
       var maxItem = heap[0];
-      for(var i = dataToSortAndPage.Length - maxItems; i-- > 0; ) {
+      for(var i = maxItems; i < dataToSortAndPage.Length; i++) {
         if(dataToSortAndPage[i].CompareTo(maxItem) >= 0) continue;
 
         var currentItem = dataToSortAndPage[i];
