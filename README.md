@@ -29,3 +29,6 @@ Useful to unit test rendering.
 
 #### InterfaceProxying
 Example of how to proxy an interface and handle a method call.
+
+#### SortingAndPagingPerformance
+Various implementations of sorting and paging a list.
