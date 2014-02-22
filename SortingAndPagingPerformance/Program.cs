@@ -8,44 +8,44 @@ namespace SortingAndPagingPerformance {
     static Stopwatch STOPWATCH = new Stopwatch();
 
     static void Main(string[] args) {
-      var length = 20;
+      var pageSize = 20;
       var iterations = 5;
       var fullSortAndPage = new FullSort();
       var dataToSortAndPage = new Guid[10000000];
-      var sortAndPageTypes = new ISortAndPage[] { new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap() };
+      var sortAndPageImplementations = new ISortAndPage[] { new PriorityQueueUsingASortedList(), new PriorityQueueUsingBinaryHeap() };
 
-      time("Created", 0, () => {
+      Time("Created Data", 0, () => {
         for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i] = Guid.NewGuid();
         return null;
       });
 
-      time("Baseline (loop and compare)", 0, () => {
+      Time("Baseline (loop and compare)", 0, () => {
         Guid empty = Guid.Empty;
         for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i].CompareTo(empty);
         return null;
       });
 
 
-      foreach(var start in new int[] { 80, 180 }) {
+      foreach(var pageStart in new int[] { 80, 180 }) {
         Console.WriteLine();
 
-        var actuals = sortAndPageTypes.Select(sortAndPageType => {
-          return time(sortAndPageType.Name + " (Random) s" + start, iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
+        var actuals = sortAndPageImplementations.Select(sortAndPageImplementation => {
+          return Time(sortAndPageImplementation.Name + " (Random) s" + pageStart, iterations, () => sortAndPageImplementation.SortAndPage(pageStart, pageSize, dataToSortAndPage));
         }).ToArray();
 
-        var expected = time(fullSortAndPage.Name, 0, () => fullSortAndPage.SortAndPage(start, length, dataToSortAndPage));
+        var expected = Time(fullSortAndPage.Name, 0, () => fullSortAndPage.SortAndPage(pageStart, pageSize, dataToSortAndPage));
 
-        actuals = sortAndPageTypes.Select(sortAndPageType => {
-          return time(sortAndPageType.Name + " (Ascending) s" + start, iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
+        actuals = sortAndPageImplementations.Select(sortAndPageImplementation => {
+          return Time(sortAndPageImplementation.Name + " (Ascending) s" + pageStart, iterations, () => sortAndPageImplementation.SortAndPage(pageStart, pageSize, dataToSortAndPage));
         }).Concat(actuals).ToArray();
 
-        time("Reverse", 0, () => {
+        Time("Reverse", 0, () => {
           Array.Reverse(dataToSortAndPage);
           return null;
         });
 
-        actuals = sortAndPageTypes.Select(sortAndPageType => {
-          return time(sortAndPageType.Name + " (Descending) s" + start, iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
+        actuals = sortAndPageImplementations.Select(sortAndPageImplementation => {
+          return Time(sortAndPageImplementation.Name + " (Descending) s" + pageStart, iterations, () => sortAndPageImplementation.SortAndPage(pageStart, pageSize, dataToSortAndPage));
         }).Concat(actuals).ToArray();
 
         for(var i = 0; i < actuals.Length; i++) actuals[i].ShouldEqual(expected);
@@ -55,9 +55,10 @@ namespace SortingAndPagingPerformance {
       }
     }
 
-    delegate Guid[] Action();
-    static Guid[] time(string descr, int iterations, Action action) {
+    delegate Guid[] OperationToTime();
+    static Guid[] Time(string descr, int iterations, OperationToTime action) {
       Guid[] result;
+
       // Warm up
       STOPWATCH.Reset();
       STOPWATCH.Start();
@@ -100,28 +101,28 @@ namespace SortingAndPagingPerformance {
 
     public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
       // A little over twice as slow...and doesn't sort in place - so it wrecks the subsequent tests.
-      //return dataToSortAndPage.OrderBy(d => d).Skip(start).Take(length).ToArray();
+      //return dataToSortAndPage.OrderBy(d => d).Skip(pageStart).Take(pageSize).ToArray();
       Array.Sort(dataToSortAndPage);
       return dataToSortAndPage.Skip(start).Take(length).ToArray();
     }
   }
 
-  class PriorityQueueUsingSortedList : ISortAndPage {
-    public string Name { get { return "Priority Queue Using Sorted List"; } }
+  class PriorityQueueUsingASortedList : ISortAndPage {
+    public string Name { get { return "Priority Queue Using A Sorted List"; } }
 
     public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
-      var maxItems = start + length;
-      var upperBound = maxItems - 1;
-      var queue = new SortedList<Guid, object>(maxItems + 1);
+      var totalLength = start + length;
+      var upperBound = totalLength - 1;
+      var queue = new SortedList<Guid, object>(totalLength + 1);
 
-      for(var i = 0; i < maxItems; i++) queue[dataToSortAndPage[i]] = null;
+      for(var i = 0; i < totalLength; i++) queue[dataToSortAndPage[i]] = null;
 
       var keys = queue.Keys;
       var maxItem = keys[upperBound];
-      for(var i = maxItems; i < dataToSortAndPage.Length; i++) {
+      for(var i = totalLength; i < dataToSortAndPage.Length; i++) {
         if(dataToSortAndPage[i].CompareTo(maxItem) >= 0) continue;
         queue[dataToSortAndPage[i]] = null;
-        queue.RemoveAt(maxItems);
+        queue.RemoveAt(totalLength);
         maxItem = keys[upperBound];
       }
 
@@ -152,7 +153,7 @@ namespace SortingAndPagingPerformance {
       }
 
       /* An alternative to the above.
-      Array.Copy(dataToSortAndPage, 0, heap, 0, maxItems);
+      Array.Copy(dataToSortAndPage, 0, heap, 0, totalLength);
       Array.Sort(heap);
       Array.Reverse(heap);
       */
