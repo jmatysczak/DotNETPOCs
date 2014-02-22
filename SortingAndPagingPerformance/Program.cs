@@ -5,38 +5,63 @@ using System.Linq;
 
 namespace SortingAndPagingPerformance {
   class Program {
+    static Stopwatch STOPWATCH = new Stopwatch();
+
     static void Main(string[] args) {
       var start = 80;
       var length = 20;
-      var stopwatch = new Stopwatch();
-      var dataToSortAndPage = new Guid[20000000];
+      var iterations = 5;
+      var dataToSortAndPage = new Guid[10000000];
 
-      stopwatch.Reset();
-      stopwatch.Start();
-      for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i] = Guid.NewGuid();
-      stopwatch.Stop();
-      Console.WriteLine("Created: {0}", stopwatch.Elapsed);
+      time("Created: {0}", 0, () => {
+        for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i] = Guid.NewGuid();
+        return dataToSortAndPage;
+      });
 
-      var sortAndPage = new ISortAndPage[] { new SortAll(), /*new SortAllWithLinq(),*/ new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap(), new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap(), new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap() };
-      var sortedAndPaged = new Guid[sortAndPage.Length][];
-      for(var i = 0; i < sortAndPage.Length; i++) {
-        stopwatch.Reset();
-        stopwatch.Start();
-        sortedAndPaged[i] = sortAndPage[i].SortAndPage(start, length, dataToSortAndPage);
-        stopwatch.Stop();
-        Console.WriteLine("{0}: {1}", sortAndPage[i].Name, stopwatch.Elapsed);
+      time("Baseline (loop and compare): {0}", 0, () => {
+        Guid empty = Guid.Empty;
+        for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i].CompareTo(empty);
+        return dataToSortAndPage;
+      });
+
+      var sortAndPages = new ISortAndPage[] { new PriorityQueueUsingSortedList(), new PriorityQueueUsingBinaryHeap() };
+      var actuals = sortAndPages.Select(sortAndPage => {
+        return time(sortAndPage.Name + "(Random): {0}", iterations, () => sortAndPage.SortAndPage(start, length, dataToSortAndPage));
+      }).ToArray();
+
+      var sortAll = new SortAll();
+      var expected = time(sortAll.Name + ": {0}", 0, () => sortAll.SortAndPage(start, length, dataToSortAndPage));
+
+      for(var i = 0; i < actuals.Length; i++) {
+        actuals[i].ShouldEqual(expected);
+      }
+    }
+
+    delegate Guid[] Action();
+    static Guid[] time(string descr, int iterations, Action action) {
+      Guid[] result;
+      // Warm up
+      STOPWATCH.Reset();
+      STOPWATCH.Start();
+      result = action();
+      STOPWATCH.Stop();
+      var timeSpan = STOPWATCH.Elapsed;
+
+      if(iterations > 0) {
+        timeSpan = TimeSpan.Zero;
+        for(var i = 0; i < iterations; i++) {
+          STOPWATCH.Reset();
+          STOPWATCH.Start();
+          result = action();
+          STOPWATCH.Stop();
+          timeSpan += STOPWATCH.Elapsed;
+        }
+        timeSpan = TimeSpan.FromTicks(timeSpan.Ticks / iterations);
       }
 
-      stopwatch.Reset();
-      stopwatch.Start();
-      Guid empty = Guid.Empty;
-      for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i].CompareTo(empty);
-      stopwatch.Stop();
-      Console.WriteLine("Loop and compare: {0}", stopwatch.Elapsed);
+      Console.WriteLine(descr, timeSpan);
 
-      for(var i = 1; i < sortedAndPaged.Length; i++) {
-        sortedAndPaged[i - 1].ShouldEqual(sortedAndPaged[i]);
-      }
+      return result;
     }
   }
 
@@ -58,14 +83,6 @@ namespace SortingAndPagingPerformance {
     public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
       Array.Sort(dataToSortAndPage);
       return dataToSortAndPage.Skip(start).Take(length).ToArray();
-    }
-  }
-
-  class SortAllWithLinq : ISortAndPage {
-    public string Name { get { return "Sort All With Linq"; } }
-
-    public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
-      return dataToSortAndPage.OrderBy(d => d).Skip(start).Take(length).ToArray();
     }
   }
 
