@@ -130,7 +130,7 @@ namespace SortingAndPagingPerformance {
       var keys = queue.Keys;
       var maxItem = keys[upperBound];
       for(var i = totalLength; i < dataToSortAndPage.Length; i++) {
-        if(dataToSortAndPage[i].CompareTo(maxItem) >= 0) continue;
+        if(dataToSortAndPage[i].CompareTo(maxItem) > 0) continue;
         queue[dataToSortAndPage[i]] = null;
         queue.RemoveAt(totalLength);
         maxItem = keys[upperBound];
@@ -174,7 +174,7 @@ namespace SortingAndPagingPerformance {
 
       var maxItem = heap[0];
       for(var i = totalLength; i < dataToSortAndPage.Length; i++) {
-        if(dataToSortAndPage[i].CompareTo(maxItem) >= 0) continue;
+        if(dataToSortAndPage[i].CompareTo(maxItem) > 0) continue;
 
         var currentItem = dataToSortAndPage[i];
         var parentIndex = 0;
