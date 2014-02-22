@@ -31,4 +31,4 @@ Useful to unit test rendering.
 Example of how to proxy an interface and handle a method call.
 
 #### SortingAndPagingPerformance
-Various implementations of sorting and paging a list.
+Various implementations of sorting and paging a list. I wanted to implement a priority queue backed by a binary heap and see the run time numbers.
