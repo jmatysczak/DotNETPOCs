@@ -29,8 +29,8 @@ namespace SortingAndPagingPerformance {
         return time(sortAndPage.Name + "(Random): {0}", iterations, () => sortAndPage.SortAndPage(start, length, dataToSortAndPage));
       }).ToArray();
 
-      var sortAll = new SortAll();
-      var expected = time(sortAll.Name + ": {0}", 0, () => sortAll.SortAndPage(start, length, dataToSortAndPage));
+      var fullSort = new FullSort();
+      var expected = time(fullSort.Name + ": {0}", 0, () => fullSort.SortAndPage(start, length, dataToSortAndPage));
 
       for(var i = 0; i < actuals.Length; i++) {
         actuals[i].ShouldEqual(expected);
@@ -77,8 +77,8 @@ namespace SortingAndPagingPerformance {
     Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage);
   }
 
-  class SortAll : ISortAndPage {
-    public string Name { get { return "Sort All"; } }
+  class FullSort : ISortAndPage {
+    public string Name { get { return "Full Sort"; } }
 
     public Guid[] SortAndPage(int start, int length, Guid[] dataToSortAndPage) {
       Array.Sort(dataToSortAndPage);
