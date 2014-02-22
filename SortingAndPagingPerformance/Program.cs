@@ -102,14 +102,13 @@ namespace SortingAndPagingPerformance {
       var upperBound = maxItems - 1;
       var queue = new SortedList<Guid, object>(maxItems + 1);
 
-      for(var i = dataToSortAndPage.Length - maxItems; i < dataToSortAndPage.Length; i++) queue[dataToSortAndPage[i]] = null;
+      for(var i = 0; i < maxItems; i++) queue[dataToSortAndPage[i]] = null;
 
       var keys = queue.Keys;
       var maxItem = keys[upperBound];
-      for(var i = dataToSortAndPage.Length - maxItems; i-- > 0; ) {
+      for(var i = maxItems; i < dataToSortAndPage.Length; i++) {
         if(dataToSortAndPage[i].CompareTo(maxItem) >= 0) continue;
-        var currentItem = dataToSortAndPage[i];
-        queue[currentItem] = null;
+        queue[dataToSortAndPage[i]] = null;
         queue.RemoveAt(maxItems);
         maxItem = keys[upperBound];
       }
