@@ -16,13 +16,13 @@ namespace SortingAndPagingPerformance {
 
       time("Created", 0, () => {
         for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i] = Guid.NewGuid();
-        return dataToSortAndPage;
+        return null;
       });
 
       time("Baseline (loop and compare)", 0, () => {
         Guid empty = Guid.Empty;
         for(var i = 0; i < dataToSortAndPage.Length; i++) dataToSortAndPage[i].CompareTo(empty);
-        return dataToSortAndPage;
+        return null;
       });
 
 
@@ -39,7 +39,10 @@ namespace SortingAndPagingPerformance {
           return time(sortAndPageType.Name + " (Ascending) s" + start, iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
         }).Concat(actuals).ToArray();
 
-        Array.Reverse(dataToSortAndPage);
+        time("Reverse", 0, () => {
+          Array.Reverse(dataToSortAndPage);
+          return null;
+        });
 
         actuals = sortAndPageTypes.Select(sortAndPageType => {
           return time(sortAndPageType.Name + " (Descending) s" + start, iterations, () => sortAndPageType.SortAndPage(start, length, dataToSortAndPage));
