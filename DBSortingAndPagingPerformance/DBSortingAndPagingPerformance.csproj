@@ -39,8 +39,8 @@
   <ItemGroup>
     <None Include="01 - Create Table.sql" />
     <None Include="02 - Populate Table.sql" />
-    <None Include="03 - RowNumber.sql" />
-    <None Include="03 - Top and RowNumber.sql" />
+    <None Include="03 - No RowCount - RowNumber.sql" />
+    <None Include="03 - No RowCount - Top and RowNumber.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
