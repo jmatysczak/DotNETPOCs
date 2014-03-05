@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetASPNETFileAsType", "GetASPNETFileAsType.csproj", "{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7946F8F-046E-4D7D-8371-F24A3C70D3DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
