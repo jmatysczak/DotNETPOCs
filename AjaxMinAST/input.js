@@ -1,10 +1,16 @@
-﻿function Speaker() {
-	this.greeting = "Hello";
+﻿function getColor(severity) {
+	return ["Green", "Yellow", "Red"][severity];
 }
 
-Speaker.prototype.sayHelloTo = function(name) {
-	var iAmNotUsed = 0;
-	return this.greeting + (name ? " " + name : "") + "!";
-};
-
-console.log(new Speaker().speak());
+function getStatus(startDate, completeDate, percentComplete) {
+	var now = new Date();
+	if(percentComplete === 100) {
+		return "Complete";
+	} else if(now < startDate) {
+		return "Pending";
+	} else if(now < completeDate && percentComplete) {
+		return "In progress";
+	} else {
+		return "Late";
+	}
+}
