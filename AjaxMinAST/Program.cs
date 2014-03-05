@@ -39,7 +39,7 @@ namespace AjaxMinAST {
 			base.Visit(node);
 			foreach(var function in this.functions.Children) {
 				node.Properties.Insert(node.Properties.Count, new ObjectLiteralProperty(node.Context) {
-					Name = new ObjectLiteralField("Name", PrimitiveType.String, node.Context),
+					Name = new ObjectLiteralField((function as FunctionObject).Binding.Name, PrimitiveType.String, node.Context),
 					Value = function
 				});
 			}
