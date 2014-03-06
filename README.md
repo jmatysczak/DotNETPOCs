@@ -1,5 +1,8 @@
 ### Proof of concepts/examples/investigations in .NET.
 
+#### AjaxMinAST
+Use the Microsoft Ajax Minifier to parse Javascript and manipulate the AST.
+
 #### ASPNETHosting
 Example of how to host ASP.NET, add a module to modify page, and process a page.
 
